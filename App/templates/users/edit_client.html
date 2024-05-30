@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Toolbar-->
+    
+    <!--end::Toolbar-->
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Navbar-->
+            
+            <!--end::Navbar-->
+            <!--begin::Card-->
+            <div class="card">
+                <!--begin::Card header-->
+                <div class="card-header">
+                    <!--begin::Card title-->
+                    <div class="card-title fs-3 fw-bolder">Edición del Cliente</div>
+                    <!--end::Card title-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Form-->
+                
+                <form id="kt_edit_user_form" method='POST' class="form" action="{% url 'Editar_cliente' id %}">
+                    {% csrf_token %}
+                        
+                    <!--begin::Card body-->
+                    <div class="card-body p-9">
+                        
+                        <!--begin::Row-->
+                        <div class="row mb-8">
+                            <!--begin::Col-->
+                            <div class="col-xl-3">
+                                <div class="fs-6 fw-bold mt-2 mb-3">Nombre del cliente</div>
+                            </div>
+                            <div class="col-xl-9 fv-row">
+                                {{form.nombre}}
+                            </div>
+                        </div>
+                        <div class="row mb-8">
+                            <!--begin::Col-->
+                            <div class="col-xl-3">
+                                <div class="fs-6 fw-bold mt-2 mb-3">Marca y Modelo del auto</div>
+                            </div>
+                            <div class="col-xl-9 fv-row">
+                                {{form.marca_modelo_auto}}
+                            </div>
+                        </div>
+                        <div class="row mb-8">
+                            <!--begin::Col-->
+                            <div class="col-xl-3">
+                                <div class="fs-6 fw-bold mt-2 mb-3">Matrícula del auto</div>
+                            </div>
+                            <div class="col-xl-9 fv-row">
+                                {{form.matricula}}
+                            </div>
+                        </div>
+                        <div class="row mb-8">
+                            <!--begin::Col-->
+                            <div class="col-xl-3">
+                                <div class="fs-6 fw-bold mt-2 mb-3">Detalles extras</div>
+                            </div>
+                            <div class="col-xl-9 fv-row">
+                                {{form.detalles}}
+                            </div>
+                        </div>
+                        <div class="row mb-8">
+                            <!--begin::Col-->
+                            <div class="col-xl-3">
+                                <div class="fs-6 fw-bold mt-2 mb-3">Número de teléfono del cliente</div>
+                            </div>
+                            <div class="col-xl-9 fv-row">
+                                {{form.numero_telef}}
+                            </div>
+                        </div>
+                        <div class="row mb-8">
+                            <!--begin::Col-->
+                            <div class="col-xl-3">
+                                <div class="fs-6 fw-bold mt-2 mb-3">Costo del servicio</div>
+                            </div>
+                            <div class="col-xl-9 fv-row">
+                                {{form.costo}}
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!--end::Card body-->
+                    <!--begin::Card footer-->
+                    <div class="card-footer d-flex justify-content-end py-6 px-9">
+                        <button type="button" class="btn btn-light-danger me-3" onclick="goBack()">Descartar</button>
+                        <button type="submit" class="btn btn-primary" id="kt_project_settings_submit">Salvar Cambios</button>
+                    </div>
+                    <!--end::Card footer-->
+                </form>
+                <!--end:Form-->
+            </div>
+            <!--end::Card-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+</div>
+<!--end::Content-->
+ 
+{% endblock  %}
+   
