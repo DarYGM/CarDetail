@@ -41,10 +41,10 @@ def List_User(request):
 
         if formclient.is_valid():
             new_cliente=formclient.save(commit=False)
-            new_cliente.estado="En espera"
             new_cliente.save()
             form=ClienteForm()
         else:
+            print('Darianaaaaaa')
             print(formclient.errors)  # Imprime los errores del formulario en la consola
             print(formclient.non_field_errors())  # Imprime errores no asociados a un campo específico
 

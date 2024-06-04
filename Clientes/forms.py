@@ -3,11 +3,7 @@ from django import forms
 from .models import Cliente
 
 class ClienteForm(forms.ModelForm):
-    estados_choice=[
-        ('En espera','En espera'),
-        ('En lavando','En lavando'),
-        ('Terminado','Terminado')
-        ]
+    
     def validate_matricula_length(value):
         if len(value) > 7:
             raise forms.ValidationError('La matrícula debe tener 7 o menos caracteres.')
@@ -79,17 +75,25 @@ class ClienteForm(forms.ModelForm):
             
         }
     ))
-    estado=forms.CharField(label='Estado',widget=forms.TextInput(
+    estado = forms.ChoiceField(
+    label='Estado',
+    choices=[
+        ('Pendiente','Pendiente'),
+        ('Terminado','Terminado')
+        # Agrega más opciones según sea necesario
+    ],
+    initial='Pendiente',  # Valor por defecto
+    widget=forms.Select(
         attrs={
-            'class':'form-control form-control-solid mb-3 mb-lg-0',
-            'placeholder':'Estado del servicio',
-            'name':'Requerimiento',
-            'type':'text',
-            'required':'required',
-            'autocomplete':'off',
-            
+            'class': 'form-select form-select-solid',
+            'placeholder': 'Estado del servicio',
+            'data-control':'select2', 
+            'name': 'Requerimiento',
+            'required': 'required',
+            'autocomplete': 'off',
         }
-    ))
+    )
+)
     class Meta:
         
         model = Cliente

@@ -4,8 +4,7 @@ from django.core.validators import RegexValidator
 # Create your models here.
 class Cliente(models.Model):
     estados_choice=[
-        ('En espera','En espera'),
-        ('En lavando','En lavando'),
+        ('Pendiente','Pendiente'),
         ('Terminado','Terminado')
     ]
     nombre= models.CharField(max_length=60,blank=False, null=False)
