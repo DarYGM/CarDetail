@@ -10,6 +10,8 @@ import openpyxl
 from datetime import datetime
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from Clientes.models import Profile
+
 
 # Create your views here.
 def StartLogin(request):
@@ -33,7 +35,8 @@ def Logout(request):
 def List_User(request):
     costos=0
     form=ClienteForm()
-    clientes=Cliente.objects.all()
+    prof=Profile.objects.get(user=request.user)
+    clientes=Cliente.objects.filter(owner=request.user)
     
     mensaje=''
     if request.method == 'POST':
@@ -41,25 +44,29 @@ def List_User(request):
 
         if formclient.is_valid():
             new_cliente=formclient.save(commit=False)
+            new_cliente.owner=request.user
             new_cliente.save()
             form=ClienteForm()
+            return redirect('List_User') 
         else:
             print('Darianaaaaaa')
             print(formclient.errors)  # Imprime los errores del formulario en la consola
             print(formclient.non_field_errors())  # Imprime errores no asociados a un campo específico
 
     #costos=sum(c.costo for c in clientes)
-    return render(request,'list.html',{'clientes':clientes,'form':form})
+    return render(request,'list.html',{'clientes':clientes,'form':form,'profile':prof})
     
+
 def Delete_client(request,pk):
     
     cliente=Cliente.objects.get(id=pk)
     cliente.delete()
     messages.success(request, 'Cliente eliminado exitosamente.')
-    clientes=Cliente.objects.all()
+    clientes=Cliente.objects.filter(owner=request.user)
     form=ClienteForm()
     #costos=sum(c.costo for c in clientes)
-    return  render(request,'list.html',{'clientes':clientes,'form':form,})   
+    #return  render(request,'list.html',{'clientes':clientes,'form':form,})  
+    return redirect('List_User') 
 
 def Search_client(request):
     client=[]
@@ -68,19 +75,20 @@ def Search_client(request):
     if request.method =='POST':
         
         nomb = request.POST.get('clientsearch')
-        print(nomb)
+        #print(nomb)
         if nomb:
-            client= Cliente.objects.filter(nombre__icontains=nomb)
+            client= Cliente.objects.filter(owner=request.user, nombre__icontains=nomb)
             
             #costos = sum(c.costo for c in client)
-
-    return  render(request,'list.html',{'clientes':client,'form':form})
+    return redirect('List_User') 
+    #return  render(request,'list.html',{'clientes':client,'form':form})
 
 def Filtrar(request):
-    clientes=Cliente.objects.filter(estado=request.POST.get('estado_filtro'),marca_modelo_auto__icontains=request.POST.get('marca_auto'))
+    clientes=Cliente.objects.filter(owner=request.user, estado=request.POST.get('estado_filtro'),marca_modelo_auto__icontains=request.POST.get('marca_auto'))
     
     form=ClienteForm()
-    return render(request,'list.html',{'clientes':clientes,'form':form})
+    #return render(request,'list.html',{'clientes':clientes,'form':form})
+    return redirect('List_User') 
 
 def Finalizar(request,pk):
     cliente=Cliente.objects.get(id=pk)
@@ -95,7 +103,7 @@ def Finalizar(request,pk):
 
 def Editar_cliente(request,tk):
     #para cargar vista inicial con todo
-    clientes=Cliente.objects.all()
+    clientes=Cliente.objects.filter(owner=request.user)
     formm=ClienteForm()
     #costos= sum(c.costo for c in clientes)
     #para actualizar en caso de confirmarce actualizaci'on
@@ -105,9 +113,12 @@ def Editar_cliente(request,tk):
         form=ClienteForm(request.POST,instance=cliente)
         if form.is_valid():
             form.save()
-            return  render(request,'list.html',{'clientes':clientes,'form':formm,})   
+            return redirect('List_User') 
+            #return  render(request,'list.html',{'clientes':clientes,'form':formm,})   
 
     return  render(request,'edit_client.html',{'form':form,'id':cliente.id})        
+
+
 
 def Exportar_datos_clientes(request):
     formato = request.GET.get('format')
@@ -130,7 +141,6 @@ def Exportar_datos_clientes(request):
 
 
         
-
     #return redirect('List_User')
 
 def exportar_a_excel():

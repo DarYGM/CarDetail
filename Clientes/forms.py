@@ -1,6 +1,12 @@
 
 from django import forms
 from .models import Cliente
+from .models import Profile
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['bio', 'birth_date', 'profile_picture']
 
 class ClienteForm(forms.ModelForm):
     
@@ -70,7 +76,7 @@ class ClienteForm(forms.ModelForm):
             'type':'number',
             'required':'required',
             'autocomplete':'off',
-            'step': '0.5',  # Permite dos decimales para precios
+            'step': '500',  # Permite dos decimales para precios
             'min': '0'  # Valor mínimo permitido
             
         }

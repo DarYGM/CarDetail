@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from App.views import List_User,Delete_client,Search_client,Editar_cliente,Logout,Login,StartLogin,Finalizar,Exportar_datos_clientes,Filtrar
 from CarDetail import settings
 from django.contrib.auth.views import LoginView, LogoutView
+from Clientes.views import Profile_update
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +34,7 @@ urlpatterns = [
     path('buscar_cliente/',Search_client,name="Search_client"),
     path('filtro/',Filtrar,name="Filtrar"),
     path('exportar_clientes_excel/',Exportar_datos_clientes,name="Exportar_datos_clientes"),
+    path('profile/', Profile_update, name='Profile_update'),
     
     
 

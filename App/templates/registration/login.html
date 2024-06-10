@@ -77,12 +77,12 @@
 							<button type="submit"> Entrar </button>
 						-->
 						<!--begin::Form-->
-						<form class="form w-100" method="POST" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="../../demo1/dist/index.html" action="{% url 'StartLogin' %}">
+						<form class="form w-100" method="POST" novalidate="novalidate" id="kt_sign_in_form"  action="{% url 'StartLogin' %}">
 							<!--begin::Heading-->
 							{% csrf_token %}
 							<div class="text-center mb-10">
 								<!--begin::Title-->
-								<img src="{% static 'img/3.png' %}" alt="Logo de mi proyecto" width="50" height="50" style='margin-bottom: 10px;'>
+								<img src="{% static 'Logo/DGM.png' %}" alt="Logo de mi proyecto" width="75" height="70" style='margin-bottom: 10px;'>
 								<h1 class="text-dark mb-3">Sign In to CarDetail</h1>
 								
 								<!--end::Title-->
@@ -189,6 +189,7 @@
 			</div>
 			<!--end::Authentication - Sign-in-->
 		</div>
+		{% include 'footer.html' %}
 		<!--end::Root-->
 		<!--end::Main-->
 		<!--begin::Javascript-->
