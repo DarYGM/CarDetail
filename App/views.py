@@ -80,7 +80,7 @@ def Search_client(request):
             client= Cliente.objects.filter(owner=request.user, nombre__icontains=nomb)
             
             #costos = sum(c.costo for c in client)
-    return redirect('List_User') 
+    return render(request,'list.html',{'clientes':client,'form':form}) 
     #return  render(request,'list.html',{'clientes':client,'form':form})
 
 def Filtrar(request):
@@ -88,7 +88,7 @@ def Filtrar(request):
     
     form=ClienteForm()
     #return render(request,'list.html',{'clientes':clientes,'form':form})
-    return redirect('List_User') 
+    return render(request,'list.html',{'clientes':clientes,'form':form})  
 
 def Finalizar(request,pk):
     cliente=Cliente.objects.get(id=pk)
